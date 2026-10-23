@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#121213">
+  <title>InformáticaDLE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="logo-wrap">
+      <!-- Poné el logo de tu escuela como logo.png (si no existe, se oculta solo) -->
+      <img src="logo.png" alt="Logo" class="school-logo" onerror="this.style.display='none'">
+    </div>
+    <h1 class="main-title">INFORMÁTICA<span class="highlight">DLE</span></h1>
+    <p class="subtitle">Informática 7mo Edición</p>
+  </header>
+
+  <!-- ============ MENÚ PRINCIPAL ============ -->
+  <main id="view-menu" class="menu-container view">
+    <h2 class="menu-heading">Selecciona un Modo</h2>
+    <div class="modes-grid">
+
+      <button class="mode-card" onclick="selectMode('emojis')">
+        <span class="mode-icon">😎</span>
+        <span class="mode-info">
+          <h3>Adivina el pibe por Emojis</h3>
+          <p>3 a 5 emojis, ¿quién es?</p>
+        </span>
+      </button>
+
+      <button class="mode-card" onclick="selectMode('palabras')">
+        <span class="mode-icon">🕵️</span>
+        <span class="mode-info">
+          <h3>Palabras descriptivas</h3>
+          <p>Una palabra clave nueva con cada error.</p>
+        </span>
+      </button>
+
+      <button class="mode-card" onclick="selectMode('personaje')">
+        <span class="mode-icon">👤</span>
+        <span class="mode-info">
+          <h3>Adivina el Personaje</h3>
+          <p>Descubre al pibe comparando datos como mes de nacimiento, grupo y materias.</p>
+        </span>
+      </button>
+
+    </div>
+  </main>
+
+  <!-- ============ MODOS 1, 2 y 3 (se rellenan desde la plantilla de abajo) ============ -->
+  <main id="view-emojis" class="game-container view hidden"></main>
+  <main id="view-palabras" class="game-container view hidden"></main>
+  <main id="view-personaje" class="game-container view hidden"></main>
+
+  <!-- Plantilla compartida por los modos 1, 2 y 3 -->
+  <template id="tpl-game">
+    <div class="game-top">
+      <button class="back-btn" type="button" onclick="volverMenu()" aria-label="Volver al menú">← Menú</button>
+      <h2 class="game-title" data-role="title"></h2>
+      <span class="attempts-badge" data-role="attempts">0/6</span>
+    </div>
+
+    <p class="game-hint" data-role="hint"></p>
+
+    <div data-role="board" aria-live="polite"></div>
+
+    <!-- Buscador / lista desplegable -->
+    <div class="guess-area" data-role="area">
+      <div class="combo">
+        <input type="text" class="combo-input" data-role="input"
+               placeholder="Buscá un nombre o apellido…"
+               autocomplete="off" autocapitalize="off" spellcheck="false"
+               role="combobox" aria-expanded="false">
+        <button class="combo-toggle" data-role="toggle" type="button" aria-label="Ver lista">▾</button>
+        <ul class="combo-list hidden" data-role="list" role="listbox"></ul>
+      </div>
+      <button class="guess-btn" data-role="btn" type="button" disabled>Adivinar</button>
+    </div>
+
+    <ul class="guess-history" data-role="history"></ul>
+
+    <!-- Resultado final -->
+    <div class="result-box hidden" data-role="result">
+      <h3 data-role="resultTitle"></h3>
+      <p class="result-text" data-role="resultText"></p>
+      <div class="result-actions">
+        <button class="guess-btn" data-role="share" type="button">Compartir 📋</button>
+        <button class="back-btn" type="button" onclick="volverMenu()">Menú</button>
+      </div>
+      <p class="next-note">Vuelve mañana para un nuevo alumno.</p>
+    </div>
+  </template>
+
+  <!-- ============ WORDLE (ya no está en el menú; se accede con selectMode('wordle')) ============ -->
+  <main id="view-wordle" class="game-container view hidden">
+    <div class="game-top">
+      <button class="back-btn" onclick="volverMenu()" aria-label="Volver al menú">← Menú</button>
+      <h2 class="game-title">🔤 Wordle 7mo</h2>
+      <span class="attempts-badge" id="wordle-attempts">0/6</span>
+    </div>
+
+    <p class="game-hint" id="wordle-hint"></p>
+
+    <div class="wordle-board" id="wordle-board" aria-live="polite"></div>
+
+    <!-- Resultado final -->
+    <div class="result-box hidden" id="wordle-result">
+      <h3 id="wordle-result-title"></h3>
+      <p class="result-text" id="wordle-result-text"></p>
+      <div class="result-actions">
+        <button class="guess-btn" id="wordle-share" type="button">Compartir 📋</button>
+        <button class="back-btn" type="button" onclick="volverMenu()">Menú</button>
+      </div>
+      <p class="next-note">Vuelve mañana para un nuevo alumno.</p>
+    </div>
+
+    <!-- Teclado virtual -->
+    <div class="wordle-keyboard" id="wordle-keyboard"></div>
+  </main>
+
+  <div class="toast hidden" id="toast" role="status"></div>
+
+  <footer class="main-footer">
+    <p>Creado por <strong>Informática 7mo</strong> 🎓 • 2026</p>
+  </footer>
+
+  <script src="alumnos.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
